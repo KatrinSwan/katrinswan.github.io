@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Рифмоплёт — Почувствуй себя поэтом</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f4eee8;
+            --card-bg: #fffbf5;
+            --text: #3e2e23;
+            --accent: #9f7e69;
+            --accent-light: #e7dbce;
+            --border: #dccbb8;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--bg);
+            background-image: radial-gradient(circle at 20% 30%, #fff4e6 0%, #e6d5c3 100%);
+            font-family: 'Lora', 'Georgia', serif;
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-tap-highlight-color: transparent;
+            padding-top: 0;
+        }
+
+        /* Шапка сайта */
+        header {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: rgba(255, 251, 245, 0.9); backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+        .logo {
+            font-family: 'Playfair Display', 'Georgia', serif;
+            font-size: 1.8rem; font-style: italic; color: var(--text);
+            text-decoration: none; letter-spacing: 1px;
+            text-shadow: 1px 1px 0 #f0e0d0;
+        }
+        .nav-links { display: flex; list-style: none; gap: 25px; }
+        .nav-links a {
+            color: #6b4f3a; text-decoration: none; font-size: 0.95rem;
+            transition: color 0.2s; padding: 6px 0;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent); border-bottom-color: var(--accent); }
+        .burger { display: none; cursor: pointer; flex-direction: column; gap: 5px; z-index: 1001; }
+        .burger span { display: block; width: 28px; height: 3px; background: var(--accent); border-radius: 2px; transition: 0.3s; }
+        .burger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
+        .burger.active span:nth-child(2) { opacity: 0; }
+        .burger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
+
+        /* Контейнер игры */
+        .game-container {
+            max-width: 700px; width: 100%; margin: 0 auto;
+            background: var(--card-bg);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border-radius: 24px; padding: 24px 20px;
+            border: 1px solid var(--border);
+            margin-top: 80px;
+        }
+
+        /* Заголовок игры */
+        .game-header { text-align: center; margin-bottom: 16px; }
+        .game-header h1 {
+            font-family: 'Playfair Display', 'Georgia', serif;
+            font-weight: 400; font-style: italic; color: var(--text);
+            font-size: 2.2rem; letter-spacing: 2px;
+            text-shadow: 2px 2px 0 #f0e0d0;
+        }
+        .game-header .subtitle { color: #6b4f3a; margin-top: 4px; font-size: 1rem; }
+
+        /* Фильтры */
+        .filter-panel { margin-bottom: 12px; }
+        .filter-group label { font-size: 0.9rem; color: #6b4f3a; margin-bottom: 6px; display: block; font-weight: 700; }
+        .filter-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+        .filter-btn {
+            background: var(--accent-light); border: 1px solid #cfbcab;
+            padding: 8px 16px; border-radius: 40px;
+            font-family: 'Lora', 'Georgia', serif; font-size: 0.95rem; color: #4d3627;
+            cursor: pointer; transition: 0.15s; white-space: nowrap;
+        }
+        .filter-btn.active { background: var(--accent); color: white; border-color: #7b5f4b; }
+        .filter-btn:active { transform: scale(0.96); }
+
+        /* Карточка стиха */
+        .poem-card {
+            background: #fdf8f2; padding: 24px 16px; border-radius: 16px;
+            box-shadow: inset 0 0 0 1px #ede0d4, 0 6px 12px -6px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px; min-height: 120px;
+        }
+        .poem-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; justify-content: center; }
+        .poem-era, .poem-author, .poem-topic {
+            font-size: 0.85rem; padding: 4px 12px; border-radius: 20px;
+            background: #e7dbce; color: #4d3627; cursor: help;
+        }
+        .poem-lines {
+            font-size: 1.5rem; line-height: 2.2rem; text-align: center;
+            color: #2c1e14;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .poem-line {
+            display: block;
+            width: 100%;
+        }
+
+        /* Слоты */
+        .word-slot {
+            display: inline-block; min-width: 100px;
+            background: #e7dbd0; border-radius: 40px;
+            padding: 4px 16px; margin: 0 2px; text-align: center;
+            border: 2px dashed #a5836e; color: #4f3625;
+            font-weight: 700; font-style: italic; font-size: 1.3rem;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: background 0.2s, border 0.2s; cursor: pointer;
+            vertical-align: middle;
+        }
+        .word-slot.filled {
+            background: #c3b09b; border: 2px solid #6e4f38;
+            color: #1f140e; box-shadow: 0 2px 0 #8e6f58; font-style: normal;
+        }
+        .word-slot.highlight { background: #d4c3b5; border-color: #9f7e69; }
+
+        /* Банк слов */
+        .words-bank {
+            display: flex; flex-wrap: wrap; justify-content: center;
+            gap: 12px; margin: 12px 0 20px; padding: 16px 12px;
+            background: #e7ddd2; border-radius: 60px;
+            min-height: 60px; border: 1px solid #cbb7a6;
+        }
+        .word-tile {
+            background: #ffffffd9; padding: 10px 20px;
+            border-radius: 50px; font-size: 1.3rem; font-weight: 700;
+            color: #38271c; box-shadow: 0 4px 0 #ad9582, 0 2px 6px rgba(0, 0, 0, 0.08);
+            cursor: grab; border: 1px solid #bfa692; transition: 0.1s;
+        }
+        .word-tile:active { cursor: grabbing; opacity: 0.7; transform: translateY(2px); box-shadow: 0 2px 0 #ad9582; }
+        .word-tile.dragging { opacity: 0.5; }
+
+        /* Кнопки */
+        .actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 10px; }
+        .btn {
+            background: #b7a18e; border: 1px solid #9a8472;
+            padding: 12px 22px; border-radius: 40px;
+            font-size: 1rem; font-family: 'Lora', 'Georgia', serif; font-weight: 700;
+            color: #2b1e15; box-shadow: 0 4px 0 #6e5846;
+            cursor: pointer; transition: 0.1s; min-width: 44px; min-height: 44px;
+        }
+        .btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #6e5846; }
+        .btn-check { background: #8faa7b; box-shadow: 0 4px 0 #5f724c; border-color: #7a9368; }
+        .btn-next { background: #c9a96b; box-shadow: 0 4px 0 #8e703e; border-color: #b8974e; }
+        .btn-hint { background: #c9b896; box-shadow: 0 4px 0 #8e7a55; border-color: #b8a37a; }
+
+        /* Сообщение */
+        .message { text-align: center; font-size: 1.2rem; color: #3d2b1e; font-style: italic; min-height: 2rem; margin-top: 12px; }
+        .message.win { color: #2b6e3b; font-weight: 700; }
+
+        /* Прогресс */
+        .progress { text-align: center; margin-top: 10px; font-size: 0.9rem; color: #7d6654; }
+
+        /* Справка */
+        .glossary-btn {
+            display: block; margin: 16px auto 0; background: none;
+            border: 1px dashed #b7a18e; padding: 8px 20px; border-radius: 30px;
+            font-family: 'Lora', 'Georgia', serif; font-size: 0.95rem; color: #5d4535;
+            cursor: pointer; transition: 0.15s;
+        }
+        .glossary-btn:active { background: #e7dbce; }
+
+        /* Модальное окно */
+        .overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(2px);
+            z-index: 3000; opacity: 0; pointer-events: none; transition: opacity 0.2s;
+        }
+        .overlay.visible { opacity: 1; pointer-events: auto; }
+        .modal {
+            position: fixed; top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: white; border-radius: 24px; padding: 0;
+            max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto;
+            z-index: 3001; opacity: 0; pointer-events: none;
+            transition: opacity 0.2s, transform 0.2s;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+        .modal.visible { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
+        .modal-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 16px 20px; border-bottom: 1px solid #e5d9cf;
+        }
+        .modal-header h2 {
+            font-family: 'Playfair Display', 'Georgia', serif;
+            font-size: 1.4rem; font-weight: 400; color: #3e2e23;
+        }
+        .modal-close {
+            background: none; border: none; font-size: 1.8rem; cursor: pointer;
+            color: #8e7a65; width: 44px; height: 44px;
+            display: flex; align-items: center; justify-content: center; border-radius: 50%;
+        }
+        .modal-close:active { background: #f0e8dd; }
+        .modal-body { padding: 16px 20px; }
+        .modal-body h3 { color: #5d4535; margin: 12px 0 6px; font-family: 'Playfair Display', 'Georgia', serif; }
+        .modal-body p { color: #4d3627; margin-bottom: 8px; line-height: 1.5; }
+        .modal-body .era-section { margin-bottom: 16px; }
+
+        /* Тултип */
+        .tooltip-popup {
+            position: fixed; background: white; padding: 12px 16px;
+            border-radius: 16px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            max-width: 260px; z-index: 3100; font-size: 0.9rem; line-height: 1.4;
+            opacity: 0; pointer-events: none; transition: opacity 0.2s;
+            border-left: 4px solid var(--accent);
+        }
+        .tooltip-popup.visible { opacity: 1; pointer-events: auto; }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; flex-direction: column;
+                position: absolute; top: 65px; left: 0; width: 100%;
+                background: var(--card-bg); padding: 20px; gap: 12px;
+                border-bottom: 1px solid var(--border);
+            }
+            .nav-links.active { display: flex; }
+            .burger { display: flex; }
+            .game-container { margin-top: 70px; padding: 16px 12px; }
+            .game-header h1 { font-size: 1.8rem; }
+            .poem-lines { font-size: 1.2rem; line-height: 1.8rem; }
+            .poem-line {
+                display: block;
+                width: 100%;
+            }
+            .word-tile { font-size: 1.1rem; padding: 8px 16px; }
+            .word-slot { font-size: 1.1rem; min-width: 80px; padding: 4px 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">Kate Swan</a>
+                <div class="burger" id="siteBurger" aria-label="Меню">
+                    <span></span><span></span><span></span>
+                </div>
+                <ul class="nav-links" id="siteLinks">
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="index.html#about">О себе</a></li>
+                    <li><a href="music.html">Музыка</a></li>
+                    <li><a href="game.html" class="active">Рифмоплёт</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="game-container">
+            <div class="game-header">
+                <h1>✍️ Рифмоплёт</h1>
+                <p class="subtitle">Почувствуй себя поэтом</p>
+            </div>
+
+            <div class="filter-panel">
+                <div class="filter-group">
+                    <label>Эпоха:</label>
+                    <div class="filter-buttons" id="eraFilters">
+                        <button class="filter-btn active" data-era="all">Все</button>
+                        <button class="filter-btn" data-era="golden_age">🏛️ Золотой век</button>
+                        <button class="filter-btn" data-era="silver_age">🌙 Серебряный век</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-panel">
+                <div class="filter-group">
+                    <label>Тема:</label>
+                    <div class="filter-buttons" id="topicFilters">
+                        <button class="filter-btn active" data-topic="all">Все</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="poem-card">
+                <div class="poem-meta">
+                    <span class="poem-era" id="poemEra"></span>
+                    <span class="poem-author" id="poemAuthor"></span>
+                    <span class="poem-topic" id="poemTopic"></span>
+                </div>
+                <div class="poem-lines" id="poemLines"></div>
+            </div>
+
+            <div class="words-bank" id="wordsBank"></div>
+
+            <div class="actions">
+                <button class="btn btn-hint" id="hintBtn">💡 Подсказка</button>
+                <button class="btn btn-check" id="checkBtn">✓ Проверить</button>
+                <button class="btn btn-next" id="nextBtn" style="display:none;">→ Далее</button>
+            </div>
+
+            <div class="message" id="messageArea"></div>
+            <div class="progress"><span id="progressText">Стих 0 из 0</span></div>
+            <button class="glossary-btn" id="glossaryBtn">📖 Справка</button>
+        </div>
+    </main>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="modal" id="glossaryModal">
+        <div class="modal-header">
+            <h2>📖 Справка</h2>
+            <button class="modal-close" id="modalClose">&times;</button>
+        </div>
+        <div class="modal-body" id="modalBody"></div>
+    </div>
+    <div class="tooltip-popup" id="tooltipPopup"></div>
+
+    <script src="js/data.js"></script>
+    <script src="js/game.js"></script>
+
+    <script>
+        const siteBurger = document.getElementById('siteBurger');
+        const siteLinks = document.getElementById('siteLinks');
+        siteBurger.addEventListener('click', () => {
+            siteLinks.classList.toggle('active');
+            siteBurger.classList.toggle('active');
+        });
+        siteLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                siteLinks.classList.remove('active');
+                siteBurger.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
