@@ -130,7 +130,19 @@
         }
         .about-photo-img { width: 100%; height: 100%; object-fit: cover; background-size: cover; background-position: center; }
         .about-text h3 { font-size: 1.8rem; font-style: italic; color: var(--text); margin-bottom: 12px; }
-        .about-text p { color: #5d4535; margin-bottom: 12px; }
+        .about-text p { color: #5d4535; margin-bottom: 12px; }		
+		.about-text a {
+			color: var(--accent);
+			text-decoration: underline;
+			text-underline-offset: 3px;
+			text-decoration-thickness: 1px;
+			text-decoration-color: #c9a96b;
+			transition: color 0.2s;
+		}
+		.about-text a:hover {
+			color: #7b5f4b;
+			text-decoration-color: #7b5f4b;
+		}		
         .about-stats { display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap; }
         .stat {
             text-align: center; padding: 12px 18px;
@@ -210,45 +222,58 @@
             </div>
         </section>
 
-        <section id="about">
-            <div class="container">
-                <h2 class="section-title">О себе</h2>
-                <div class="about-grid">
-                    <div class="about-photo">
-                        <div class="about-photo-img" style="background-image: url('images/about.jpg');"></div>
-                    </div>
-                    <div class="about-text">
-                        <h3>Екатерина Лебедева</h3>
-                        <p>
-                            Пишу стихи как Айвазовский, и картины как Бальмонт.
-                        </p>
-                        <p>
-                            Этот сайт — моя тихая гавань: здесь есть родник музыки,
-                            волны шепчут стихами и местная игра «Рифмоплёт» для тех,
-                            кто хочет почувствовать себя поэтом.
-                        </p>
-                        <p>							
-							Моя небольшая хижина на берегу всегда ждет гостей, которым ни чужды покой, 
-							морские рассказы и безудержное веселье тропической ночи.
-                        </p>
-                        <div class="about-stats">
-                            <div class="stat">
-                                <div class="stat-number">1</div>
-                                <div class="stat-label">Песня в сети</div>
-                            </div>
-                            <div class="stat">
-                                <div class="stat-number">∞</div>
-                                <div class="stat-label">Идей в голове</div>
-                            </div>
-                            <div class="stat">
-                                <div class="stat-number">2026</div>
-                                <div class="stat-label">Год старта</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+		<section id="about">
+			<div class="container">
+				<h2 class="section-title">О себе</h2>
+				<div class="about-grid">
+					<div class="about-photo">
+						<div class="about-photo-img" style="background-image: url('images/about.jpg');"></div>
+					</div>
+					<div class="about-text">
+						<h3>Екатерина Лебедева</h3>
+						<p>
+							Днём я говорю на языке кода и технологий, ночью — на языке звёзд, 
+							шторма и симфонического рока. Мой основной мир — IT, но внутри 
+							этой структуры всегда жила поэзия.
+						</p>
+						<p>
+							Я писала стихи со школы, но быстро поняла: стихам тесно на бумаге. 
+							Им нужна музыка, ритм, дыхание — им нужно быть песнями. С появлением 
+							искусственного интеллекта всё изменилось. AI стал соавтором, 
+							позволив превращать строки в полноценные музыкальные полотна: 
+							с оркестрами, гитарными риффами и боевыми барабанами.
+						</p>
+						<p>
+							На этот путь меня вдохновил муж, Станислав Лебедев, известный под псевдонимом
+							<a href="https://stanswan.ru" target="_blank" rel="noopener"> StanSwan</a>. 
+							Он начал работать с музыкальным ИИ раньше меня и показал, 
+							что границы между технологиями и искусством больше не существует. 
+							Теперь наши песни — это разговор. С миром. И друг с другом.
+						</p>
+						<p>
+							Я создаю саундтреки к путешествиям, которые начинаются внутри.
+						</p>
+						<p>
+							Добро пожаловать на борт.
+						</p>
+						<div class="about-stats">
+							<div class="stat">
+								<div class="stat-number">2</div>
+								<div class="stat-label">Сингл выпущен</div>
+							</div>
+							<div class="stat">
+								<div class="stat-number">∞</div>
+								<div class="stat-label">Идей в голове</div>
+							</div>
+							<div class="stat">
+								<div class="stat-number">2026</div>
+								<div class="stat-label">Год запуска</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
     </main>
 
 	<footer>
