@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="/favicon.png">
-    <title>Музыка</title>
+    <title>Музыка — KateSwan</title>
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -14,105 +14,251 @@
             --accent: #9f7e69;
             --accent-light: #e7dbce;
             --border: #dccbb8;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --radius: 20px;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             background: var(--bg);
             background-image: radial-gradient(circle at 20% 30%, #fff4e6 0%, #e6d5c3 100%);
             font-family: 'Lora', 'Georgia', serif;
             color: var(--text);
             line-height: 1.8;
+            overflow-x: hidden;
         }
-        h1, h2, h3, .logo, .release-details h3 {
+
+        h1, h2, h3, .logo, .release-details h3, .player-section h2 {
             font-family: 'Playfair Display', 'Georgia', serif;
         }
-        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
 
-        /* Меню (как у тебя на других страницах) */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Меню */
         header {
-            position: fixed; top: 0; width: 100%; z-index: 1000;
-            background: rgba(255, 251, 245, 0.9); backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 251, 245, 0.9);
+            backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border);
         }
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
         .logo {
             font-family: 'Playfair Display', 'Georgia', serif;
-            font-size: 1.8rem; font-style: italic; color: var(--text);
-            text-decoration: none; letter-spacing: 1px;
+            font-size: 1.8rem;
+            font-style: italic;
+            color: var(--text);
+            text-decoration: none;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 0 #f0e0d0;
         }
-        .nav-links { display: flex; list-style: none; gap: 25px; }
-        .nav-links a {
-            color: #6b4f3a; text-decoration: none; font-size: 0.95rem;
-            padding: 6px 0; border-bottom: 2px solid transparent;
-            transition: color 0.2s;
-        }
-        .nav-links a:hover, .nav-links a.active { color: var(--accent); border-bottom-color: var(--accent); }
-        .burger { display: none; cursor: pointer; flex-direction: column; gap: 5px; z-index: 1001; }
-        .burger span { display: block; width: 28px; height: 3px; background: var(--accent); border-radius: 2px; transition: 0.3s; }
-        .burger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
-        .burger.active span:nth-child(2) { opacity: 0; }
-        .burger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
 
-        /* Страница музыки — в стиле мужа */
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: #6b4f3a;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+            padding: 6px 0;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        .burger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 5px;
+            z-index: 1001;
+        }
+
+        .burger span {
+            display: block;
+            width: 28px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        .burger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 6px);
+        }
+
+        .burger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .burger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -6px);
+        }
+
+        /* Страница музыки */
         .music-page {
             max-width: 900px;
             margin: 0 auto;
             padding: 120px 20px 80px;
         }
+
         .music-page h1 {
             font-size: 2.5rem;
             font-style: italic;
             margin-bottom: 8px;
             color: var(--text);
+            text-shadow: 2px 2px 0 #f0e0d0;
         }
+
         .subtitle {
             color: #6b4f3a;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             font-style: italic;
         }
 
-        /* Карточки релизов — как у мужа */
-        .release-cards {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
+        /* Блок плеера — как у мужа, с двумя вкладками: плейлист и пресейв */
+        .player-tabs-wrapper {
+            margin-bottom: 60px;
+            background: var(--card-bg);
+            border-radius: 28px;
+            box-shadow: inset 0 0 0 1px #ede0d4, 0 6px 20px -6px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
         }
 
-        .release-card-full {
+        .tabs-header {
+            display: flex;
+            background: #fcf8f2;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 14px 0;
+            font-family: 'Playfair Display', 'Georgia', serif;
+            font-size: 1.2rem;
+            font-style: normal;  /* Убираем курсив */
+            font-weight: 500;
+            color: #7d6654;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            letter-spacing: 0.3px;
+        }
+
+        .tab-btn.active {
+            color: var(--text);
+            background: var(--card-bg);
+            font-weight: 600;
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 10%;
+            width: 80%;
+            height: 3px;
+            background: #c9a96b;
+            border-radius: 3px 3px 0 0;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 24px 20px 20px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Стили внутри табов */
+        .player-section h2,
+        .presave-section h2 {
+            font-size: 1.8rem;
+            font-style: italic;
+            color: var(--text);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .player-section > p,
+        .presave-section > p {
+            color: #6b4f3a;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .yandex-player {
+            width: 100%;
+            border-radius: 20px;
+            border: none;
+            background: transparent;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Карточка пресейва внутри таба — стилизована как у мужа "Твой голос" */
+        .presave-card {
             display: flex;
             gap: 30px;
-            background: var(--card-bg);
+            background: #fffef9;
             border-radius: 24px;
             overflow: hidden;
-            box-shadow: inset 0 0 0 1px #ede0d4, 0 6px 20px -6px rgba(0,0,0,0.08);
-            transition: transform 0.2s;
-        }
-        .release-card-full:hover {
-            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-top: 10px;
         }
 
-        .release-cover-large {
-            flex: 0 0 200px;
-            height: 200px;
+        .presave-cover {
+            flex: 0 0 180px;
+            height: 180px;
             overflow: hidden;
         }
-        .cover-img {
+
+        .presave-cover img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .release-details {
+        .presave-details {
             padding: 20px 24px 20px 0;
             flex: 1;
         }
-        .release-details h3 {
+
+        .presave-details h3 {
             font-size: 1.8rem;
             font-style: italic;
             margin-bottom: 6px;
             color: var(--text);
         }
-        .release-date {
+
+        .presave-date {
             font-size: 0.8rem;
             color: #9f7e69;
             text-transform: uppercase;
@@ -120,16 +266,18 @@
             display: inline-block;
             margin-bottom: 12px;
         }
-        .release-desc {
+
+        .presave-desc {
             color: #5a4232;
             margin-bottom: 16px;
             line-height: 1.6;
         }
-        .release-link {
+
+        .presave-link {
             display: inline-block;
             background: #c9a96b;
             color: #2b1e15;
-            padding: 8px 24px;
+            padding: 8px 28px;
             border-radius: 40px;
             text-decoration: none;
             font-weight: 700;
@@ -138,7 +286,8 @@
             box-shadow: 0 3px 0 #8e703e;
             font-family: 'Lora', 'Georgia', serif;
         }
-        .release-link:active {
+
+        .presave-link:active {
             transform: translateY(2px);
             box-shadow: 0 1px 0 #8e703e;
         }
@@ -150,18 +299,22 @@
             font-size: 0.9rem;
             border-top: 1px solid var(--border);
         }
+
         .signoff {
             font-style: italic;
             margin-bottom: 10px;
         }
+
         .social-links {
             margin: 10px 0;
         }
+
         .social-links a {
             color: #6b2e2e;
             text-decoration: none;
             margin: 0 10px;
         }
+
         .social-links a:hover {
             text-decoration: underline;
         }
@@ -179,112 +332,183 @@
                 gap: 12px;
                 border-bottom: 1px solid var(--border);
             }
-            .nav-links.active { display: flex; }
-            .burger { display: flex; }
-            .music-page h1 { font-size: 2rem; }
-            .release-card-full {
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .burger {
+                display: flex;
+            }
+
+            .music-page h1 {
+                font-size: 2rem;
+            }
+
+            .tab-btn {
+                font-size: 1rem;
+                padding: 12px 0;
+            }
+
+            .presave-card {
                 flex-direction: column;
             }
-            .release-cover-large {
+
+            .presave-cover {
                 flex: 0 0 auto;
                 height: 220px;
             }
-            .release-details {
+
+            .presave-details {
                 padding: 20px;
             }
-            .release-details h3 { font-size: 1.5rem; }
+
+            .presave-details h3 {
+                font-size: 1.5rem;
+            }
+
+            .player-section h2,
+            .presave-section h2 {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="container">
-            <nav>
-                <a href="index.html" class="logo">Kate Swan</a>
-                <div class="burger" id="burger">
-                    <span></span><span></span><span></span>
-                </div>
-                <ul class="nav-links" id="navLinks">
-                    <li><a href="index.html">Главная</a></li>
-                    <li><a href="index.html#about">О себе</a></li>
-                    <li><a href="music.html" class="active">Музыка</a></li>
-                    <li><a href="game.html">Рифмоплёт</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <main>
-        <section class="music-page">
-            <h1>🎵 Музыка</h1>
-            <p class="subtitle">Нажмите на трек, чтобы выбрать удобную площадку для прослушивания</p>
-
-            <div class="release-cards">
-
-                <!-- ⚓ ПЕРВЫЙ СИНГЛ: А-р-р-р (8 июня) -->
-                <div class="release-card-full">
-                    <div class="release-cover-large">
-                        <img src="images/arrr.jpg" alt="А-р-р-р" class="cover-img">
-                    </div>
-                    <div class="release-details">
-                        <h3>А-р-р-р</h3>
-                        <span class="release-date">Релиз 8 июня 2026 • Пиратская баллада</span>
-                        <p class="release-desc">
-                            Песня о свободе, море и пути к своей мечте. Заряжает ветром и солью.
-                        </p>
-                        <a href="https://band.link/nsnwb" class="release-link">🎧 Слушать →</a>
-                    </div>
-                </div>
-
-                <!-- ⚓ ВТОРОЙ СИНГЛ: Навсегда (17 июня) -->
-                <div class="release-card-full">
-                    <div class="release-cover-large">
-                        <img src="images/forever.jpg" alt="Навсегда" class="cover-img">
-                    </div>
-                    <div class="release-details">
-                        <h3>Навсегда</h3>
-                        <span class="release-date">Релиз 17 июня 2026 • Лёгкий фолк</span>
-                        <p class="release-desc">
-                            Песня, посвещенная моему взрослому сынишке. С Днем Рождения! Вместе навсегда.
-                        </p>
-                        <a href="https://band.link/v6BZG" class="release-link">🎧 Пресейв →</a>
-                    </div>
-                </div>
-				
-                <!-- Здесь будут твои будущие песни. Добавляй по такому же шаблону -->
-
+<header>
+    <div class="container">
+        <nav>
+            <a href="index.html" class="logo">Kate Swan</a>
+            <div class="burger" id="burger">
+                <span></span><span></span><span></span>
             </div>
-        </section>
-    </main>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="index.html#about">О себе</a></li>
+                <li><a href="music.html" class="active">Музыка</a></li>
+                <li><a href="game.html">Рифмоплёт</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
 
-	<footer>
-		<p class="signoff">С морским приветом, KateSwan</p>
-		<div class="social-links">
-			<a href="https://vk.com/kateswan_creator" target="_blank">ВКонтакте</a>
-			<a href="https://music.yandex.ru/artist/26008833" target="_blank">Яндекс Музыка</a>
-		</div>
-		<p class="copyright">© 2026 KateSwan. Все права защищены.</p>
-	</footer>
+<main>
+    <section class="music-page">
+        <h1>🎵 Музыка</h1>
+        <p class="subtitle">Слушайте на любимых площадках или сохраните будущий релиз</p>
 
-    <script>
-        // Бургер-меню
-        const burger = document.getElementById('burger');
-        const navLinks = document.getElementById('navLinks');
-        if (burger) {
-            burger.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-                burger.classList.toggle('active');
+        <!-- Блок с двумя вкладками: плейлист / пресейв — как у мужа -->
+        <div class="player-tabs-wrapper">
+            <div class="tabs-header">
+                <button class="tab-btn active" data-tab="playlist">🎧 Слушать</button>
+                <button class="tab-btn" data-tab="presave">🔮 Пресейв</button>
+            </div>
+
+            <!-- Вкладка Плейлист (Яндекс Музыка) -->
+            <div class="tab-content active" id="tab-playlist">
+                <div class="player-section">
+                    <h2>Послушать прямо сейчас</h2>
+                    <p>Все мои треки на Яндекс Музыке</p>
+                    <!-- Используем iframe страницы артиста — он показывает все релизы и плейлисты -->
+                    <iframe class="yandex-player"
+                            src="https://music.yandex.ru/iframe/#artist/26008833/playlists/"
+                            height="420"
+                            frameborder="0"
+                            allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+
+            <!-- Вкладка Пресейв (новый релиз) -->
+            <div class="tab-content" id="tab-presave">
+                <div class="presave-section">
+                    <h2>Скоро</h2>
+                    <p>Новый трек уже на подходе — сохраните, чтобы не пропустить</p>
+                    <div class="presave-card">
+                        <div class="presave-cover">
+                            <!-- Обложка нового релиза, такая же как у мужа в карточке "Твой голос" -->
+                            <img src="images/forever.jpg" alt="Навсегда — новый сингл" class="cover-img">
+                        </div>
+                        <div class="presave-details">
+                            <h3>Навсегда</h3>
+                            <span class="presave-date">Релиз 17 июня 2026</span>
+                            <p class="presave-desc">
+                                Песня, посвящённая моему взрослому сынишке. С Днём Рождения! Вместе навсегда.
+                                Нажмите на кнопку, чтобы выбрать удобную площадку для пресейва.
+                            </p>
+                            <!-- Ссылка на band.link (smartlink) для пресейва нового трека -->
+                            <a href="https://band.link/v6BZG" class="presave-link" target="_blank">Пресейв →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p class="signoff">С морским приветом, KateSwan</p>
+    <div class="social-links">
+        <a href="https://vk.com/kateswan_creator" target="_blank">ВКонтакте</a>
+        <a href="https://music.yandex.ru/artist/26008833" target="_blank">Яндекс Музыка</a>
+    </div>
+    <p class="copyright">© 2026 KateSwan. Все права защищены.</p>
+</footer>
+
+<script>
+    // Бургер-меню
+    const burger = document.getElementById('burger');
+    const navLinks = document.getElementById('navLinks');
+    if (burger) {
+        burger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            burger.classList.toggle('active');
+        });
+    }
+    if (navLinks) {
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                burger.classList.remove('active');
             });
-        }
-        if (navLinks) {
-            navLinks.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    navLinks.classList.remove('active');
-                    burger.classList.remove('active');
-                });
-            });
-        }
-    </script>
+        });
+    }
+
+    // Переключение вкладок: плейлист / пресейв
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    function activateTab(tabId) {
+        // скрыть все контенты
+        tabContents.forEach(content => {
+            content.classList.remove('active');
+        });
+        // убрать активный класс у кнопок
+        tabBtns.forEach(btn => {
+            btn.classList.remove('active');
+        });
+        // показать нужный контент
+        const activeContent = document.getElementById(`tab-${tabId}`);
+        if (activeContent) activeContent.classList.add('active');
+        // подсветить кнопку
+        const activeBtn = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
+        if (activeBtn) activeBtn.classList.add('active');
+    }
+
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const tabId = btn.getAttribute('data-tab');
+            if (tabId === 'playlist' || tabId === 'presave') {
+                activateTab(tabId);
+            }
+        });
+    });
+
+    // Убедимся, что первая вкладка активна по умолчанию (слушаем)
+    if (!document.querySelector('.tab-content.active')) {
+        activateTab('playlist');
+    }
+</script>
 </body>
 </html>
