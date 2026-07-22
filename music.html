@@ -32,7 +32,7 @@
             overflow-x: hidden;
         }
 
-        h1, h2, h3, .logo {
+        h1, h2, h3, .logo, .player-section h2, .platforms-section h2 {
             font-family: 'Playfair Display', 'Georgia', serif;
         }
 
@@ -141,11 +141,13 @@
             font-style: italic;
         }
 
+        /* Плеер */
         .player-section {
             background: var(--card-bg);
             border-radius: 28px;
             padding: 30px 24px 24px;
             box-shadow: inset 0 0 0 1px #ede0d4, 0 6px 20px -6px rgba(0, 0, 0, 0.08);
+            margin-bottom: 50px;
         }
 
         .player-section h2 {
@@ -169,6 +171,131 @@
             background: transparent;
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
         }
+
+        /* Платформы — скопировано с index.html */
+        .platforms-section {
+            background: rgba(255, 251, 245, 0.5);
+            border-radius: 28px;
+            padding: 30px 24px 24px;
+            box-shadow: inset 0 0 0 1px #ede0d4, 0 6px 20px -6px rgba(0, 0, 0, 0.08);
+        }
+
+        .platforms-section h2 {
+            font-size: 1.8rem;
+            font-style: italic;
+            color: var(--text);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .platforms-section > p {
+            color: #6b4f3a;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 14px;
+            margin-bottom: 30px;
+        }
+
+        .platform-badge {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 18px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+            font-family: 'Lora', 'Georgia', serif;
+        }
+
+        .platform-badge:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            border-color: var(--accent);
+            background: #fffcf7;
+        }
+
+        .platform-badge .badge-icon {
+            width: 32px;
+            height: 32px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .platform-badge .badge-icon svg {
+            width: 100%;
+            height: 100%;
+            fill: currentColor;
+        }
+
+        .platform-badge .badge-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            color: #3e2e23;
+        }
+
+        /* Цветные акценты при ховере */
+        .platform-badge.yandex:hover { border-color: #FFCC00; }
+        .platform-badge.vk:hover { border-color: #4C75A3; }
+        .platform-badge.ok:hover { border-color: #EE8208; }
+        .platform-badge.zvuk:hover { border-color: #E86A4A; }
+        .platform-badge.mts:hover { border-color: #FF0066; }
+        .platform-badge.wink:hover { border-color: #FF6B00; }
+        .platform-badge.rutube:hover { border-color: #CC2B2B; }
+        .platform-badge.youtube:hover { border-color: #FF0000; }
+        .platform-badge.spotify:hover { border-color: #1DB954; }
+        .platform-badge.deezer:hover { border-color: #A238FF; }
+        .platform-badge.apple:hover { border-color: #FC3C44; }
+
+        .band-link-wrapper {
+            text-align: center;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .band-link-text {
+            color: #7d6654;
+            margin-bottom: 16px;
+            font-style: italic;
+            font-size: 0.95rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-family: 'Lora', 'Georgia', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #2b1e15;
+            text-decoration: none;
+            transition: 0.15s;
+            box-shadow: 0 4px 0 #6e5846;
+            border: 1px solid #9a8472;
+            background: #b7a18e;
+            cursor: pointer;
+        }
+
+        .btn:hover { background: #c3af9c; }
+        .btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #6e5846; }
+
+        .btn.accent {
+            background: #c9a96b;
+            box-shadow: 0 4px 0 #8e703e;
+            border-color: #b8974e;
+        }
+        .btn.accent:hover { background: #d4b87a; }
 
         footer {
             text-align: center;
@@ -223,12 +350,54 @@
                 font-size: 2rem;
             }
 
-            .player-section h2 {
+            .player-section h2,
+            .platforms-section h2 {
                 font-size: 1.5rem;
             }
 
-            .player-section {
+            .player-section,
+            .platforms-section {
                 padding: 20px 16px 16px;
+            }
+
+            .platform-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .platform-badge {
+                padding: 12px 14px;
+                gap: 10px;
+            }
+
+            .platform-badge .badge-icon {
+                width: 26px;
+                height: 26px;
+            }
+
+            .platform-badge .badge-name {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .platform-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+
+            .platform-badge {
+                padding: 10px 12px;
+                border-radius: 12px;
+            }
+
+            .platform-badge .badge-icon {
+                width: 22px;
+                height: 22px;
+            }
+
+            .platform-badge .badge-name {
+                font-size: 0.7rem;
             }
         }
     </style>
@@ -257,9 +426,9 @@
         <h1>🎵 Музыка</h1>
         <p class="subtitle">Слушайте все мои треки на Яндекс Музыке</p>
 
+        <!-- Плеер -->
         <div class="player-section">
             <h2>Послушать прямо сейчас</h2>
-            <p>Все релизы и плейлисты — в одном плеере</p>
             <iframe class="yandex-player"
                     src="https://music.yandex.ru/iframe/#artist/26008833/playlists/"
                     height="420"
@@ -267,14 +436,123 @@
                     allowfullscreen>
             </iframe>
         </div>
+
+        <!-- Платформы -->
+        <div class="platforms-section">
+            <h2>Все релизы на любимых платформах</h2>
+
+            <div class="platform-grid">
+                <!-- Яндекс Музыка -->
+                <a href="https://music.yandex.ru/artist/26008833" target="_blank" class="platform-badge yandex">
+                    <span class="badge-icon">
+                        <svg viewBox="0 0 24 24" fill="#000"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    </span>
+                    <span class="badge-name">Яндекс Музыка</span>
+                </a>
+
+                <!-- ВКонтакте музыка -->
+                <a href="https://vk.com/artist/kateswan" target="_blank" class="platform-badge vk">
+                    <span class="badge-icon">
+                        <svg viewBox="0 0 24 24" fill="#4C75A3"><path d="M22 12c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2s10 4.48 10 10zM7 8.5h2.4l1.2 4.5 1.2-4.5h2.4l-2.7 8.5h-2.4L7 8.5zm9.3 0h-1.6l-1.8 5.9-1.8-5.9h-1.6l2.8 8.5h2.4l2.7-8.5z"/></svg>
+                    </span>
+                    <span class="badge-name">Музыка ВКонтакте</span>
+                </a>
+
+                <!-- Одноклассники -->
+                <a href="https://ok.ru/music/artist/122910962275053" target="_blank" class="platform-badge ok">
+                    <span class="badge-icon">
+                        <svg viewBox="0 0 24 24" fill="#EE8208"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c3.87 0 7 3.13 7 7s-3.13 7-7 7-7-3.13-7-7 3.13-7 7-7zm-1 4v6l5-3-5-3z"/></svg>
+                    </span>
+                    <span class="badge-name">Одноклассники</span>
+                </a>
+
+                <!-- Звук -->
+                <a href="https://zvuk.com/artist/214298020" target="_blank" class="platform-badge zvuk">
+                    <span class="badge-icon">
+                        <svg viewBox="0 0 24 24" fill="#E86A4A"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c3.87 0 7 3.13 7 7s-3.13 7-7 7-7-3.13-7-7 3.13-7 7-7zm-1 4v6l5-3-5-3z"/></svg>
+                    </span>
+                    <span class="badge-name">Звук</span>
+                </a>
+
+                <!-- MTS Music -->
+                <a href="https://music.mts.ru/artist/26008833" target="_blank" class="platform-badge mts">
+                    <span class="badge-icon">
+                        <svg viewBox="0 0 24 24" fill="#FF0066"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c3.87 0 7 3.13 7 7s-3.13 7-7 7-7-3.13-7-7 3.13-7 7-7zm-1 4v6l5-3-5-3z"/></svg>
+                    </span>
+                    <span class="badge-name">MTS Music</span>
+                </a>
+
+                <!-- Wink -->
+                <a href="https://music.wink.ru/artist/214298020" target="_blank" class="platform-badge wink">
+                    <span class="badge-icon">
+                        <svg viewBox="0 0 24 24" fill="#FF6B00"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c3.87 0 7 3.13 7 7s-3.13 7-7 7-7-3.13-7-7 3.13-7 7-7zm-1 4v6l5-3-5-3z"/></svg>
+                    </span>
+                    <span class="badge-name">Wink</span>
+                </a>
+
+                <!-- Rutube -->
+                <a href="https://rutube.ru/channel/27030954" target="_blank" class="platform-badge rutube">
+                    <span class="badge-icon">
+                        <svg viewBox="0 0 24 24" fill="#CC2B2B"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9h4.5c1.38 0 2.5 1.12 2.5 2.5s-1.12 2.5-2.5 2.5H14v4h-3zm3-4h1.5c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5H14v3z"/></svg>
+                    </span>
+                    <span class="badge-name">Rutube</span>
+                </a>
+
+                <!-- YouTube -->
+                <a href="https://www.youtube.com/channel/UCf3CNrE7jQ1qTZRCguM-m0Q" target="_blank" class="platform-badge youtube">
+                    <span class="badge-icon">
+                        <svg viewBox="0 0 24 24" fill="#FF0000"><path d="M21.57 7.15a2.5 2.5 0 0 0-1.76-1.77C18.22 5 12 5 12 5s-6.22 0-7.81.38a2.5 2.5 0 0 0-1.76 1.77C2 8.75 2 12 2 12s0 3.25.43 4.85a2.5 2.5 0 0 0 1.76 1.77C5.78 19 12 19 12 19s6.22 0 7.81-.38a2.5 2.5 0 0 0 1.76-1.77C22 15.25 22 12 22 12s0-3.25-.43-4.85zM10 15V9l5 3-5 3z"/></svg>
+                    </span>
+                    <span class="badge-name">YouTube</span>
+                </a>
+
+                <!-- YouTube Music -->
+                <a href="https://music.youtube.com/channel/UCf3CNrE7jQ1qTZRCguM-m0Q" target="_blank" class="platform-badge youtube">
+                    <span class="badge-icon">
+                        <svg viewBox="0 0 24 24" fill="#FF0000"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c3.87 0 7 3.13 7 7s-3.13 7-7 7-7-3.13-7-7 3.13-7 7-7zm-1 4v6l5-3-5-3z"/></svg>
+                    </span>
+                    <span class="badge-name">YouTube Music</span>
+                </a>
+
+                <!-- Spotify -->
+                <a href="https://open.spotify.com/artist/49fYlDo71sYnFauCuR1N6Q" target="_blank" class="platform-badge spotify">
+                    <span class="badge-icon">
+                        <svg viewBox="0 0 24 24" fill="#1DB954"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.5 14.5c-.23.37-.73.48-1.1.25-3.02-1.85-6.83-2.26-11.31-1.24-.42.09-.84-.18-.93-.6-.09-.42.18-.84.6-.93 4.97-1.12 9.23-.68 12.7 1.47.37.23.48.73.24 1.05zm1.2-2.8c-.29.45-.9.6-1.35.31-3.45-2.12-8.72-2.74-12.79-1.5-.49.15-1.02-.13-1.17-.62-.15-.49.13-1.02.62-1.17 4.73-1.44 10.58-.76 14.65 1.72.45.29.6.9.31 1.35zm.07-2.8c-.31.46-.92.61-1.38.3C13.31 9.9 8.37 9.33 4.46 10.45c-.5.14-1.02-.15-1.16-.65-.14-.5.15-1.02.65-1.16 4.41-1.27 9.98-.66 14.42 2.02.46.31.61.92.3 1.38z"/></svg>
+                    </span>
+                    <span class="badge-name">Spotify</span>
+                </a>
+
+                <!-- Deezer -->
+                <a href="https://www.deezer.com/ru/artist/395284041" target="_blank" class="platform-badge deezer">
+                    <span class="badge-icon">
+                        <svg viewBox="0 0 24 24" fill="#A238FF"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c3.87 0 7 3.13 7 7s-3.13 7-7 7-7-3.13-7-7 3.13-7 7-7zm-1 4v6l5-3-5-3z"/></svg>
+                    </span>
+                    <span class="badge-name">Deezer</span>
+                </a>
+
+                <!-- Apple Music -->
+                <a href="https://music.apple.com/to/artist/kateswan/6782879434" target="_blank" class="platform-badge apple">
+                    <span class="badge-icon">
+                        <svg viewBox="0 0 24 24" fill="#000"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5c.69 0 1.31.28 1.76.73l.74-.74V7h3v2h-2v5c0 1.38-1.12 2.5-2.5 2.5z"/></svg>
+                    </span>
+                    <span class="badge-name">Apple Music</span>
+                </a>
+            </div>
+
+            <!-- band.link -->
+            <div class="band-link-wrapper">
+                <p class="band-link-text">Все площадки в одном месте</p>
+                <a href="https://band.link/kateswan" target="_blank" class="btn accent">🔗 Все ссылки →</a>
+            </div>
+        </div>
     </section>
 </main>
 
 <footer>
     <p class="signoff">С морским приветом, KateSwan</p>
     <div class="social-links">
-        <a href="https://vk.com/kateswan_creator" target="_blank">ВКонтакте</a>
-        <a href="https://music.yandex.ru/artist/26008833" target="_blank">Яндекс Музыка</a>
+        <a href="https://vk.com/kateswan_creator">Сообщество ВКонтакте</a>
+        <a href="https://t.me/kate_swan_creation" target="_blank">Telegram сообщество</a>
     </div>
     <p class="copyright">© 2026 KateSwan. Все права защищены.</p>
 </footer>
