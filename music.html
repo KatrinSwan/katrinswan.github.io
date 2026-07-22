@@ -320,9 +320,16 @@
             margin: 0 10px;
         }
 
-        .social-links a:hover {
-            text-decoration: underline;
-        }
+		/* Ссылки в футере — чтобы не разрывались */
+		.social-links a {
+			display: inline-block;
+			white-space: nowrap;
+		}
+
+		/* При наведении — подчёркивание */
+		.social-links a:hover {
+			text-decoration: underline;
+		}
 
         @media (max-width: 768px) {
             .nav-links {
@@ -336,6 +343,12 @@
                 padding: 20px;
                 gap: 12px;
                 border-bottom: 1px solid var(--border);
+				.social-links {
+					display: flex;
+					flex-direction: column;  /* столбиком */
+					align-items: center;
+					gap: 6px;
+				}	
             }
 
             .nav-links.active {
